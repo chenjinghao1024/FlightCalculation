@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chen.base.mapper.FlightFlnMapper">
+  <resultMap id="BaseResultMap" type="com.chen.base.entity.FlightFln">
+    <!--
+    该方法由生成器生成,请勿修改
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="flight_id" jdbcType="VARCHAR" property="flightId" />
+    <result column="callsign" jdbcType="VARCHAR" property="callsign" />
+    <result column="acf_type" jdbcType="VARCHAR" property="acfType" />
+    <result column="reg" jdbcType="VARCHAR" property="reg" />
+    <result column="dep_addr" jdbcType="VARCHAR" property="depAddr" />
+    <result column="arr_addr" jdbcType="VARCHAR" property="arrAddr" />
+    <result column="yetd" jdbcType="VARCHAR" property="yetd" />
+    <result column="yeta" jdbcType="VARCHAR" property="yeta" />
+    <result column="etd" jdbcType="TIMESTAMP" property="etd" />
+    <result column="eta" jdbcType="TIMESTAMP" property="eta" />
+    <result column="atd" jdbcType="TIMESTAMP" property="atd" />
+    <result column="ata" jdbcType="TIMESTAMP" property="ata" />
+    <result column="dep_gate_id" jdbcType="VARCHAR" property="depGateId" />
+    <result column="arr_gate_id" jdbcType="VARCHAR" property="arrGateId" />
+    <result column="org_timezone" jdbcType="VARCHAR" property="orgTimezone" />
+    <result column="dst_timezone" jdbcType="VARCHAR" property="dstTimezone" />
+    <result column="insert_time" jdbcType="VARCHAR" property="insertTime" />
+    <result column="new_version" jdbcType="VARCHAR" property="newVersion" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="flight_state" jdbcType="VARCHAR" property="flightState" />
+    <result column="update_reg" jdbcType="VARCHAR" property="updateReg" />
+  </resultMap>
+  <resultMap id="AirportResultMap" type="com.chen.base.entity.FlightFln">
+    <!--
+    该方法由生成器生成,请勿修改
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="flight_id" jdbcType="VARCHAR" property="flightId" />
+    <result column="callsign" jdbcType="VARCHAR" property="callsign" />
+    <result column="acf_type" jdbcType="VARCHAR" property="acfType" />
+    <result column="reg" jdbcType="VARCHAR" property="reg" />
+    <result column="dep_addr" jdbcType="VARCHAR" property="depAddr" />
+    <result column="arr_addr" jdbcType="VARCHAR" property="arrAddr" />
+    <result column="yetd" jdbcType="VARCHAR" property="yetd" />
+    <result column="yeta" jdbcType="VARCHAR" property="yeta" />
+    <result column="etd" jdbcType="TIME" property="etd" />
+    <result column="eta" jdbcType="TIME" property="eta" />
+    <result column="atd" jdbcType="VARCHAR" property="atd" />
+    <result column="ata" jdbcType="VARCHAR" property="ata" />
+    <result column="dep_gate_id" jdbcType="VARCHAR" property="depGateId" />
+    <result column="arr_gate_id" jdbcType="VARCHAR" property="arrGateId" />
+    <result column="org_timezone" jdbcType="VARCHAR" property="orgTimezone" />
+    <result column="dst_timezone" jdbcType="VARCHAR" property="dstTimezone" />
+    <result column="insert_time" jdbcType="VARCHAR" property="insertTime" />
+    <result column="new_version" jdbcType="VARCHAR" property="newVersion" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="flight_state" jdbcType="VARCHAR" property="flightState" />
+    <result column="update_reg" jdbcType="VARCHAR" property="updateReg" />
+    <association property="arrAirport" javaType="com.chen.base.entity.Airport">
+      <result column="arr_latitude" jdbcType="DECIMAL" property="latitude" />
+      <result column="arr_longitude" jdbcType="DECIMAL" property="longitude" />
+    </association>
+    <association property="depAirport" javaType="com.chen.base.entity.Airport">
+      <result column="dep_latitude" jdbcType="DECIMAL" property="latitude" />
+      <result column="dep_longitude" jdbcType="DECIMAL" property="longitude" />
+    </association>
+    <association property="aircraftType" javaType="com.chen.base.entity.AircraftType">
+      <result column="passenger_number" jdbcType="INTEGER" property="passengerNumber"/>
+    </association>
+
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+    该方法由生成器生成,请勿修改
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+    该方法由生成器生成,请勿修改
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+    该方法由生成器生成,请勿修改
+    -->
+    id, flight_id, callsign, acf_type, reg, dep_addr, arr_addr, yetd, yeta, etd, eta, 
+    atd, ata, dep_gate_id, arr_gate_id, org_timezone, dst_timezone, insert_time, new_version, 
+    update_time, flight_state, update_reg
+  </sql>
+  <select id="selectByExample" parameterType="com.chen.base.entity.FlightFlnExample" resultMap="BaseResultMap">
+    <!--
+    该方法由生成器生成,请勿修改
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from flight_fln
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--
+    该方法由生成器生成,请勿修改
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from flight_fln
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--
+    该方法由生成器生成,请勿修改
+    -->
+    delete from flight_fln
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chen.base.entity.FlightFlnExample">
+    <!--
+    该方法由生成器生成,请勿修改
+    -->
+    delete from flight_fln
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chen.base.entity.FlightFln">
+    <!--
+    该方法由生成器生成,请勿修改
+    -->
+    insert into flight_fln (id, flight_id, callsign, 
+      acf_type, reg, dep_addr, 
+      arr_addr, yetd, yeta, 
+      etd, eta, atd, 
+      ata, dep_gate_id, arr_gate_id, 
+      org_timezone, dst_timezone, insert_time, 
+      new_version, update_time, flight_state, 
+      update_reg)
+    values (#{id,jdbcType=INTEGER}, #{flightId,jdbcType=VARCHAR}, #{callsign,jdbcType=VARCHAR}, 
+      #{acfType,jdbcType=VARCHAR}, #{reg,jdbcType=VARCHAR}, #{depAddr,jdbcType=VARCHAR}, 
+      #{arrAddr,jdbcType=VARCHAR}, #{yetd,jdbcType=VARCHAR}, #{yeta,jdbcType=VARCHAR}, 
+      #{etd,jdbcType=TIMESTAMP}, #{eta,jdbcType=TIMESTAMP}, #{atd,jdbcType=TIMESTAMP}, 
+      #{ata,jdbcType=TIMESTAMP}, #{depGateId,jdbcType=VARCHAR}, #{arrGateId,jdbcType=VARCHAR}, 
+      #{orgTimezone,jdbcType=VARCHAR}, #{dstTimezone,jdbcType=VARCHAR}, #{insertTime,jdbcType=VARCHAR}, 
+      #{newVersion,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, #{flightState,jdbcType=VARCHAR}, 
+      #{updateReg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chen.base.entity.FlightFln">
+    <!--
+    该方法由生成器生成,请勿修改
+    -->
+    insert into flight_fln
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="flightId != null">
+        flight_id,
+      </if>
+      <if test="callsign != null">
+        callsign,
+      </if>
+      <if test="acfType != null">
+        acf_type,
+      </if>
+      <if test="reg != null">
+        reg,
+      </if>
+      <if test="depAddr != null">
+        dep_addr,
+      </if>
+      <if test="arrAddr != null">
+        arr_addr,
+      </if>
+      <if test="yetd != null">
+        yetd,
+      </if>
+      <if test="yeta != null">
+        yeta,
+      </if>
+      <if test="etd != null">
+        etd,
+      </if>
+      <if test="eta != null">
+        eta,
+      </if>
+      <if test="atd != null">
+        atd,
+      </if>
+      <if test="ata != null">
+        ata,
+      </if>
+      <if test="depGateId != null">
+        dep_gate_id,
+      </if>
+      <if test="arrGateId != null">
+        arr_gate_id,
+      </if>
+      <if test="orgTimezone != null">
+        org_timezone,
+      </if>
+      <if test="dstTimezone != null">
+        dst_timezone,
+      </if>
+      <if test="insertTime != null">
+        insert_time,
+      </if>
+      <if test="newVersion != null">
+        new_version,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="flightState != null">
+        flight_state,
+      </if>
+      <if test="updateReg != null">
+        update_reg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="flightId != null">
+        #{flightId,jdbcType=VARCHAR},
+      </if>
+      <if test="callsign != null">
+        #{callsign,jdbcType=VARCHAR},
+      </if>
+      <if test="acfType != null">
+        #{acfType,jdbcType=VARCHAR},
+      </if>
+      <if test="reg != null">
+        #{reg,jdbcType=VARCHAR},
+      </if>
+      <if test="depAddr != null">
+        #{depAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="arrAddr != null">
+        #{arrAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="yetd != null">
+        #{yetd,jdbcType=VARCHAR},
+      </if>
+      <if test="yeta != null">
+        #{yeta,jdbcType=VARCHAR},
+      </if>
+      <if test="etd != null">
+        #{etd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eta != null">
+        #{eta,jdbcType=TIMESTAMP},
+      </if>
+      <if test="atd != null">
+        #{atd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ata != null">
+        #{ata,jdbcType=TIMESTAMP},
+      </if>
+      <if test="depGateId != null">
+        #{depGateId,jdbcType=VARCHAR},
+      </if>
+      <if test="arrGateId != null">
+        #{arrGateId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgTimezone != null">
+        #{orgTimezone,jdbcType=VARCHAR},
+      </if>
+      <if test="dstTimezone != null">
+        #{dstTimezone,jdbcType=VARCHAR},
+      </if>
+      <if test="insertTime != null">
+        #{insertTime,jdbcType=VARCHAR},
+      </if>
+      <if test="newVersion != null">
+        #{newVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="flightState != null">
+        #{flightState,jdbcType=VARCHAR},
+      </if>
+      <if test="updateReg != null">
+        #{updateReg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chen.base.entity.FlightFlnExample" resultType="java.lang.Long">
+    <!--
+    该方法由生成器生成,请勿修改
+    -->
+    select count(*) from flight_fln
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="selectAll" resultMap="AirportResultMap">
+    select
+      flight_fln.id, flight_id, callsign, flight_fln.acf_type, reg, dep_addr, arr_addr, yetd, yeta, etd, eta,
+      atd, ata, dep_gate_id, arr_gate_id, org_timezone, dst_timezone, insert_time, new_version,
+      update_time, flight_state, update_reg , dep.longitude as dep_longitude, dep.latitude as dep_latitude, arr.longitude as arr_longitude, arr.latitude as arr_latitude,type.passenger_number
+    FROM flight_fln
+           left join airport dep on flight_fln.dep_addr = dep.identifier
+           left join airport arr on flight_fln.arr_addr = arr.identifier
+           left join aircraft_type type on flight_fln.acf_type = type.acf_type
+  </select>
+    <update id="updateByExampleSelective" parameterType="map">
+    <!--
+    该方法由生成器生成,请勿修改
+    -->
+    update flight_fln
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.flightId != null">
+        flight_id = #{record.flightId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.callsign != null">
+        callsign = #{record.callsign,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acfType != null">
+        acf_type = #{record.acfType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reg != null">
+        reg = #{record.reg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depAddr != null">
+        dep_addr = #{record.depAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrAddr != null">
+        arr_addr = #{record.arrAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yetd != null">
+        yetd = #{record.yetd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yeta != null">
+        yeta = #{record.yeta,jdbcType=VARCHAR},
+      </if>
+      <if test="record.etd != null">
+        etd = #{record.etd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.eta != null">
+        eta = #{record.eta,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.atd != null">
+        atd = #{record.atd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ata != null">
+        ata = #{record.ata,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.depGateId != null">
+        dep_gate_id = #{record.depGateId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrGateId != null">
+        arr_gate_id = #{record.arrGateId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgTimezone != null">
+        org_timezone = #{record.orgTimezone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dstTimezone != null">
+        dst_timezone = #{record.dstTimezone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insertTime != null">
+        insert_time = #{record.insertTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newVersion != null">
+        new_version = #{record.newVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.flightState != null">
+        flight_state = #{record.flightState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateReg != null">
+        update_reg = #{record.updateReg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+    该方法由生成器生成,请勿修改
+    -->
+    update flight_fln
+    set id = #{record.id,jdbcType=INTEGER},
+      flight_id = #{record.flightId,jdbcType=VARCHAR},
+      callsign = #{record.callsign,jdbcType=VARCHAR},
+      acf_type = #{record.acfType,jdbcType=VARCHAR},
+      reg = #{record.reg,jdbcType=VARCHAR},
+      dep_addr = #{record.depAddr,jdbcType=VARCHAR},
+      arr_addr = #{record.arrAddr,jdbcType=VARCHAR},
+      yetd = #{record.yetd,jdbcType=VARCHAR},
+      yeta = #{record.yeta,jdbcType=VARCHAR},
+      etd = #{record.etd,jdbcType=TIMESTAMP},
+      eta = #{record.eta,jdbcType=TIMESTAMP},
+      atd = #{record.atd,jdbcType=TIMESTAMP},
+      ata = #{record.ata,jdbcType=TIMESTAMP},
+      dep_gate_id = #{record.depGateId,jdbcType=VARCHAR},
+      arr_gate_id = #{record.arrGateId,jdbcType=VARCHAR},
+      org_timezone = #{record.orgTimezone,jdbcType=VARCHAR},
+      dst_timezone = #{record.dstTimezone,jdbcType=VARCHAR},
+      insert_time = #{record.insertTime,jdbcType=VARCHAR},
+      new_version = #{record.newVersion,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=VARCHAR},
+      flight_state = #{record.flightState,jdbcType=VARCHAR},
+      update_reg = #{record.updateReg,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chen.base.entity.FlightFln">
+    <!--
+    该方法由生成器生成,请勿修改
+    -->
+    update flight_fln
+    <set>
+      <if test="flightId != null">
+        flight_id = #{flightId,jdbcType=VARCHAR},
+      </if>
+      <if test="callsign != null">
+        callsign = #{callsign,jdbcType=VARCHAR},
+      </if>
+      <if test="acfType != null">
+        acf_type = #{acfType,jdbcType=VARCHAR},
+      </if>
+      <if test="reg != null">
+        reg = #{reg,jdbcType=VARCHAR},
+      </if>
+      <if test="depAddr != null">
+        dep_addr = #{depAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="arrAddr != null">
+        arr_addr = #{arrAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="yetd != null">
+        yetd = #{yetd,jdbcType=VARCHAR},
+      </if>
+      <if test="yeta != null">
+        yeta = #{yeta,jdbcType=VARCHAR},
+      </if>
+      <if test="etd != null">
+        etd = #{etd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eta != null">
+        eta = #{eta,jdbcType=TIMESTAMP},
+      </if>
+      <if test="atd != null">
+        atd = #{atd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ata != null">
+        ata = #{ata,jdbcType=TIMESTAMP},
+      </if>
+      <if test="depGateId != null">
+        dep_gate_id = #{depGateId,jdbcType=VARCHAR},
+      </if>
+      <if test="arrGateId != null">
+        arr_gate_id = #{arrGateId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgTimezone != null">
+        org_timezone = #{orgTimezone,jdbcType=VARCHAR},
+      </if>
+      <if test="dstTimezone != null">
+        dst_timezone = #{dstTimezone,jdbcType=VARCHAR},
+      </if>
+      <if test="insertTime != null">
+        insert_time = #{insertTime,jdbcType=VARCHAR},
+      </if>
+      <if test="newVersion != null">
+        new_version = #{newVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="flightState != null">
+        flight_state = #{flightState,jdbcType=VARCHAR},
+      </if>
+      <if test="updateReg != null">
+        update_reg = #{updateReg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chen.base.entity.FlightFln">
+    <!--
+    该方法由生成器生成,请勿修改
+    -->
+    update flight_fln
+    set flight_id = #{flightId,jdbcType=VARCHAR},
+      callsign = #{callsign,jdbcType=VARCHAR},
+      acf_type = #{acfType,jdbcType=VARCHAR},
+      reg = #{reg,jdbcType=VARCHAR},
+      dep_addr = #{depAddr,jdbcType=VARCHAR},
+      arr_addr = #{arrAddr,jdbcType=VARCHAR},
+      yetd = #{yetd,jdbcType=VARCHAR},
+      yeta = #{yeta,jdbcType=VARCHAR},
+      etd = #{etd,jdbcType=TIMESTAMP},
+      eta = #{eta,jdbcType=TIMESTAMP},
+      atd = #{atd,jdbcType=TIMESTAMP},
+      ata = #{ata,jdbcType=TIMESTAMP},
+      dep_gate_id = #{depGateId,jdbcType=VARCHAR},
+      arr_gate_id = #{arrGateId,jdbcType=VARCHAR},
+      org_timezone = #{orgTimezone,jdbcType=VARCHAR},
+      dst_timezone = #{dstTimezone,jdbcType=VARCHAR},
+      insert_time = #{insertTime,jdbcType=VARCHAR},
+      new_version = #{newVersion,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      flight_state = #{flightState,jdbcType=VARCHAR},
+      update_reg = #{updateReg,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
