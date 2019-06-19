@@ -46,7 +46,7 @@ public class CalculationService {
 
             executors.submit(new TestTask(pageInfo.getList()));
 
-        } while (pageInfo.isHasNextPage() && false);
+        } while (pageInfo.isHasNextPage());
 
     }
 
@@ -113,7 +113,11 @@ public class CalculationService {
                     }
 
                     if ("备降".equals(result.getFlightState()) || "返航".equals(result.getFlightState())) {
-                        result.setReturnLossCost(BigDecimal.valueOf(CalculationUtil.cancelLossCost()));
+                        result.setReturnLossCost(BigDecimal.valueOf(CalculationUtil.returnLossCost()));
+                    }
+                    if (result.getAtd() != null && result.getAta() != null) {
+                        result.setAirDelayLossCost(BigDecimal.valueOf(CalculationUtil.airDelayLossCost(fln.getAtd(), fln.getEtd())));
+                        result.setTimeValueCost(BigDecimal.valueOf(CalculationUtil.timeValueCost(fln.getAtd(), fln.getEtd())));
                     }
                     results.add(result);
                 } catch (Exception e) {

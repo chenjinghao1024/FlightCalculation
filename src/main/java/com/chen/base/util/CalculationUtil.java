@@ -51,10 +51,21 @@ public class CalculationUtil {
      * 汇率 人民币/美元汇率
      */
     private static double EXCHANGE_RATE = 6.91;
+    /**
+     * 空中延误经济损失费用 [美元/小时]
+     */
+    private static double AIR_DELAY_LOSS_COST = 3300;
+    /**
+     * 旅客时间价值费用 [美元/小时]
+     */
+    private static double TIME_VALUE_COST = 2173;
 
-
-    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
+    /**
+     * 两地距离
+     * @param depAirport
+     * @param arrAirport
+     * @return
+     */
     private static double distanceCalculation(Airport depAirport, Airport arrAirport) {
         return distanceCalculation(depAirport.getLatitude().doubleValue(), depAirport.getLongitude().doubleValue(),
                 arrAirport.getLatitude().doubleValue(), arrAirport.getLongitude().doubleValue());
@@ -66,7 +77,7 @@ public class CalculationUtil {
      * @param startLongitude 起点精度
      * @param endLatitude 重点纬度
      * @param endLongitude 重点经度
-     * @return 两地距离(米)
+     * @return 两地距离(公里)
      */
     public static double distanceCalculation(double startLatitude, double startLongitude,
                                              double endLatitude, double endLongitude) {
@@ -81,7 +92,7 @@ public class CalculationUtil {
                         * Math.sin(endLongitude * PI / 180)), 2)
                         + Math.pow((Math.cos((90 - startLatitude) * PI / 180) - Math.cos((90 - endLatitude) * PI / 180)), 2)
                 ) / 2);
-        return distance;
+        return distance / 1000.0;
     }
 
     /**
@@ -133,23 +144,45 @@ public class CalculationUtil {
      */
     public static double delayTime(Date actualTime, Date estimatedTime) {
         long delayTime = actualTime.getTime() - estimatedTime.getTime();
-        return delayTime / (60.0 * 60 * 60 * 1000);
+        double delayMin = delayTime / (60.0 * 60 * 100);
+        if (delayMin > 15) {
+            return delayMin / 60.0;
+        }else {
+            return 0;
+        }
     }
 
     /**
-     * 延误损失
-     * @return 延误损失
+     * 航班取消损失
+     * @return 航班取消损失
      */
     public static double cancelLossCost(){
         return CANCEL_LOSS_COST * EXCHANGE_RATE;
     }
 
     /**
-     * 延误损失
-     * @return 延误损失
+     * 航班返航/备降损失
+     * @return 航班返航/备降损失
      */
     public static double returnLossCost(){
-        return CANCEL_LOSS_COST * EXCHANGE_RATE;
+        return RETURN_LOSS_COST;
+    }
+
+    /**
+     * 空中延误损失
+     * @return
+     */
+    public static double airDelayLossCost(Date actualTime, Date estimatedTime) {
+        return delayTime(actualTime, estimatedTime) * AIR_DELAY_LOSS_COST * EXCHANGE_RATE;
+    }
+
+    /**
+     * TODO: 确认延误总时间
+     * 旅客时间价值费用
+     * @return
+     */
+    public static double timeValueCost(Date actualTime, Date estimatedTime) {
+        return delayTime(actualTime, estimatedTime) * TIME_VALUE_COST * EXCHANGE_RATE;
     }
 
 }

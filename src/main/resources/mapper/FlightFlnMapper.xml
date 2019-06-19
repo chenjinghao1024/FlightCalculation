@@ -41,10 +41,10 @@
     <result column="arr_addr" jdbcType="VARCHAR" property="arrAddr" />
     <result column="yetd" jdbcType="VARCHAR" property="yetd" />
     <result column="yeta" jdbcType="VARCHAR" property="yeta" />
-    <result column="etd" jdbcType="TIME" property="etd" />
-    <result column="eta" jdbcType="TIME" property="eta" />
-    <result column="atd" jdbcType="VARCHAR" property="atd" />
-    <result column="ata" jdbcType="VARCHAR" property="ata" />
+    <result column="etd" jdbcType="TIMESTAMP" property="etd" />
+    <result column="eta" jdbcType="TIMESTAMP" property="eta" />
+    <result column="atd" jdbcType="TIMESTAMP" property="atd" />
+    <result column="ata" jdbcType="TIMESTAMP" property="ata" />
     <result column="dep_gate_id" jdbcType="VARCHAR" property="depGateId" />
     <result column="arr_gate_id" jdbcType="VARCHAR" property="arrGateId" />
     <result column="org_timezone" jdbcType="VARCHAR" property="orgTimezone" />
