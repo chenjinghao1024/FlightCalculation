@@ -31,7 +31,7 @@ public class CalculationService {
 
     private final static int PAGE_SIZE = 1000;
 
-    public void getDate() {
+    public void calculate() {
         PageInfo pageInfo = null;
         /*创建分页工具类*/
         do {

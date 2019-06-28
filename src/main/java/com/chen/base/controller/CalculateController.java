@@ -12,17 +12,13 @@ import javax.annotation.Resource;
  * @author Administrator
  */
 @RestController
-@RequestMapping("/first")
-public class FirstController {
-
+public class CalculateController {
     @Resource
     CalculationService calculationService;
 
-
-    @RequestMapping("/hello")
+    @RequestMapping("/calculate")
     public PageInfo<FlightFln> hello() {
-        calculationService.getDate();
+        calculationService.calculate();
         return null;
     }
-
 }
